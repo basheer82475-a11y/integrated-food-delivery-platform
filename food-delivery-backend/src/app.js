@@ -4,6 +4,10 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 
+const routes = require("./routes");
+
+const { notFound, errorHandler } = require("./middleware/error.middleware");
+
 const app = express();
 
 /*
@@ -26,15 +30,20 @@ app.use(cookieParser());
 
 /*
 |--------------------------------------------------------------------------
-| Health Check Route
+| API Routes
 |--------------------------------------------------------------------------
 */
 
-app.get("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "Food Delivery Backend API Running...",
-  });
-});
+app.use("/api/v1", routes);
+
+/*
+|--------------------------------------------------------------------------
+| Error Middlewares
+|--------------------------------------------------------------------------
+*/
+
+app.use(notFound);
+
+app.use(errorHandler);
 
 module.exports = app;
