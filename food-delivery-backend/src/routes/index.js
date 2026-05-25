@@ -1,5 +1,7 @@
 const express = require("express");
 
+const authRoutes = require("../modules/auth/routes/auth.routes");
+
 const router = express.Router();
 
 /*
@@ -14,5 +16,13 @@ router.get("/", (req, res) => {
     message: "API Working Successfully",
   });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
+
+router.use("/auth", authRoutes);
 
 module.exports = router;
