@@ -1,6 +1,5 @@
 const asyncHandler = require("../../../utils/asyncHandler");
-const ApiError = require("../../../utils/apiError");
-const apiResponse = require("../../../utils/apiResponse");
+
 const {
   registerUserService,
   loginUserService,
@@ -11,7 +10,7 @@ const {
   validateLoginInput,
 } = require("../validators/auth.validation");
 
-const generateToken = require("../utils/generateToken");
+const sendTokenResponse = require("../utils/sendTokenResponse");
 
 /*
 |--------------------------------------------------------------------------
@@ -34,15 +33,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
   });
 
-  const token = generateToken(user._id);
-  return apiResponse(res, 201, true, "User registered successfully", {
-    token,
-    user: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-    },
-  });
+  sendTokenResponse(user, 201, res, "User registered successfully");
 });
 
 /*
@@ -64,19 +55,24 @@ const loginUser = asyncHandler(async (req, res) => {
     password,
   });
 
-  const token = generateToken(user._id);
+  sendTokenResponse(user, 200, res, "Login successful");
+});
 
-  return apiResponse(res, 200, true, "Login successful", {
-    token,
-    user: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-    },
+/*
+|--------------------------------------------------------------------------
+| Logout Controller
+|--------------------------------------------------------------------------
+*/
+
+const logoutUser = asyncHandler(async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    message: "Logout successful",
   });
 });
 
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
 };
