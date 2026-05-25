@@ -1,5 +1,6 @@
 const asyncHandler = require("../../../utils/asyncHandler");
-
+const ApiError = require("../../../utils/apiError");
+const apiResponse = require("../../../utils/apiResponse");
 const {
   registerUserService,
   loginUserService,
@@ -34,12 +35,9 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   const token = generateToken(user._id);
-
-  res.status(201).json({
-    success: true,
-    message: "User registered successfully",
+  return apiResponse(res, 201, true, "User registered successfully", {
     token,
-    data: {
+    user: {
       id: user._id,
       name: user.name,
       email: user.email,
@@ -68,11 +66,9 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const token = generateToken(user._id);
 
-  res.status(200).json({
-    success: true,
-    message: "Login successful",
+  return apiResponse(res, 200, true, "Login successful", {
     token,
-    data: {
+    user: {
       id: user._id,
       name: user.name,
       email: user.email,

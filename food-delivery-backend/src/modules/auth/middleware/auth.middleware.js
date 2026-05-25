@@ -2,6 +2,14 @@ const jwt = require("jsonwebtoken");
 
 const Auth = require("../models/auth.model");
 
+const ApiError = require("../../../utils/apiError");
+
+/*
+|--------------------------------------------------------------------------
+| Protect Middleware
+|--------------------------------------------------------------------------
+*/
+
 const protect = async (req, res, next) => {
   try {
     let token;
@@ -14,9 +22,7 @@ const protect = async (req, res, next) => {
     }
 
     if (!token) {
-      res.status(401);
-
-      throw new Error("Not authorized");
+      return next(new ApiError(401, "Not authorized"));
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -29,6 +35,23 @@ const protect = async (req, res, next) => {
   }
 };
 
+/*
+|--------------------------------------------------------------------------
+| Role Authorization Middleware
+|--------------------------------------------------------------------------
+*/
+
+const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new ApiError(403, "Access denied"));
+    }
+
+    next();
+  };
+};
+
 module.exports = {
   protect,
+  authorizeRoles,
 };

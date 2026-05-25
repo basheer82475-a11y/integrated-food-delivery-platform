@@ -16,6 +16,7 @@ router.get("/", (req, res) => {
     message: "API Working Successfully",
   });
 });
+router.use("/auth", authRoutes);
 
 /*
 |--------------------------------------------------------------------------
