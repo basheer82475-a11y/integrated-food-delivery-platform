@@ -1,7 +1,14 @@
+const asyncHandler = require("../../../utils/asyncHandler");
+
 const {
   registerUserService,
   loginUserService,
 } = require("../services/auth.service");
+
+const {
+  validateRegisterInput,
+  validateLoginInput,
+} = require("../validators/auth.validation");
 
 const generateToken = require("../utils/generateToken");
 
@@ -11,32 +18,34 @@ const generateToken = require("../utils/generateToken");
 |--------------------------------------------------------------------------
 */
 
-const registerUser = async (req, res, next) => {
-  try {
-    const { name, email, password } = req.body;
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password } = req.body;
 
-    const user = await registerUserService({
-      name,
-      email,
-      password,
-    });
+  validateRegisterInput({
+    name,
+    email,
+    password,
+  });
 
-    const token = generateToken(user._id);
+  const user = await registerUserService({
+    name,
+    email,
+    password,
+  });
 
-    res.status(201).json({
-      success: true,
-      message: "User registered successfully",
-      token,
-      data: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  const token = generateToken(user._id);
+
+  res.status(201).json({
+    success: true,
+    message: "User registered successfully",
+    token,
+    data: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+  });
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -44,31 +53,32 @@ const registerUser = async (req, res, next) => {
 |--------------------------------------------------------------------------
 */
 
-const loginUser = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
 
-    const user = await loginUserService({
-      email,
-      password,
-    });
+  validateLoginInput({
+    email,
+    password,
+  });
 
-    const token = generateToken(user._id);
+  const user = await loginUserService({
+    email,
+    password,
+  });
 
-    res.status(200).json({
-      success: true,
-      message: "Login successful",
-      token,
-      data: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  const token = generateToken(user._id);
+
+  res.status(200).json({
+    success: true,
+    message: "Login successful",
+    token,
+    data: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+  });
+});
 
 module.exports = {
   registerUser,
