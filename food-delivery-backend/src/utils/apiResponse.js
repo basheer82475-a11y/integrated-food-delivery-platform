@@ -6,4 +6,5 @@ const apiResponse = (res, statusCode, success, message, data = null) => {
   });
 };
 
-module.exports = apiResponse;
+export default apiResponse;
+

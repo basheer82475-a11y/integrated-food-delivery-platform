@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
-const Auth = require("../models/auth.model");
+import Auth from "../models/auth.model.js";
 
-const ApiError = require("../../../utils/apiError");
+import ApiError from "../../../utils/apiError.js";
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +51,5 @@ const authorizeRoles = (...roles) => {
   };
 };
 
-module.exports = {
-  protect,
-  authorizeRoles,
-};
+export { protect, authorizeRoles };
+

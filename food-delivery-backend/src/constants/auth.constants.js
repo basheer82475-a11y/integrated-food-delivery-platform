@@ -4,6 +4,5 @@ const USER_ROLES = {
   DELIVERY: "delivery",
 };
 
-module.exports = {
-  USER_ROLES,
-};
+export { USER_ROLES };
+

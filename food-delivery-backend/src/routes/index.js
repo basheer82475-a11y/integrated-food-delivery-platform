@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 
-const authRoutes = require("../modules/auth/routes/auth.routes");
+import authRoutes from "../modules/auth/routes/auth.routes.js";
 
 const router = express.Router();
 
@@ -16,7 +16,6 @@ router.get("/", (req, res) => {
     message: "API Working Successfully",
   });
 });
-router.use("/auth", authRoutes);
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +25,5 @@ router.use("/auth", authRoutes);
 
 router.use("/auth", authRoutes);
 
-module.exports = router;
+export default router;
+

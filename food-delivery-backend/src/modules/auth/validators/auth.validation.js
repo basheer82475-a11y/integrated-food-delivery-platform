@@ -14,7 +14,5 @@ const validateLoginInput = ({ email, password }) => {
   }
 };
 
-module.exports = {
-  validateRegisterInput,
-  validateLoginInput,
-};
+export { validateRegisterInput, validateLoginInput };
+

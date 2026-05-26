@@ -1,12 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const morgan = require("morgan");
-const cookieParser = require("cookie-parser");
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
-const routes = require("./routes");
+import routes from "./routes/index.js";
 
-const { notFound, errorHandler } = require("./middleware/error.middleware");
+import { notFound, errorHandler } from "./middleware/error.middleware.js";
 
 const app = express();
 
@@ -46,4 +46,5 @@ app.use(notFound);
 
 app.use(errorHandler);
 
-module.exports = app;
+export default app;
+

@@ -1,4 +1,4 @@
-const Auth = require("../models/auth.model");
+import Auth from "../models/auth.model.js";
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +44,5 @@ const loginUserService = async ({ email, password }) => {
   return user;
 };
 
-module.exports = {
-  registerUserService,
-  loginUserService,
-};
+export { registerUserService, loginUserService };
+
