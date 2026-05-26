@@ -1,16 +1,17 @@
-const asyncHandler = require("../../../utils/asyncHandler");
+import asyncHandler from "../../../utils/asyncHandler.js";
 
-const {
+import {
   registerUserService,
   loginUserService,
-} = require("../services/auth.service");
+} from "../services/auth.service.js";
 
-const {
+import {
   validateRegisterInput,
   validateLoginInput,
-} = require("../validators/auth.validation");
+} from "../validators/auth.validation.js";
 
-const sendTokenResponse = require("../utils/sendTokenResponse");
+import sendTokenResponse from "../utils/sendTokenResponse.js";
+
 
 /*
 |--------------------------------------------------------------------------
@@ -71,8 +72,9 @@ const logoutUser = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = {
+export {
   registerUser,
   loginUser,
   logoutUser,
 };
+

@@ -1,4 +1,4 @@
-const generateToken = require("./generateToken");
+import generateToken from "./generateToken.js";
 
 const sendTokenResponse = (user, statusCode, res, message) => {
   const token = generateToken(user._id);
@@ -16,4 +16,5 @@ const sendTokenResponse = (user, statusCode, res, message) => {
   });
 };
 
-module.exports = sendTokenResponse;
+export default sendTokenResponse;
+

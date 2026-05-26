@@ -1,11 +1,12 @@
-const express = require("express");
-const {
+import express from "express";
+
+import {
   registerUser,
   loginUser,
   logoutUser,
-} = require("../controllers/auth.controller");
+} from "../controllers/auth.controller.js";
 
-const { protect, authorizeRoles } = require("../middleware/auth.middleware");
+import { protect, authorizeRoles } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -45,4 +46,5 @@ router.get("/admin", protect, authorizeRoles("admin"), (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;
+
