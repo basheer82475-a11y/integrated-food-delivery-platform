@@ -12,16 +12,56 @@ import { createMenuValidator } from "../validators/menu.validator.js";
 
 import validate from "../middlewares/validation.middleware.js";
 
-import { protect } from "../middlewares/auth.middleware.js";
+import { protect, authorize } from "../middlewares/auth.middleware.js";
+
+import { ROLES } from "../constants/roles.js";
+
 const router = express.Router();
 
-router.post("/", protect, createMenuValidator, validate, createMenu);
+// Create Menu
+
+router.post(
+  "/",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  createMenuValidator,
+
+  validate,
+
+  createMenu,
+);
+
+// Get All Menus
 
 router.get("/", getAllMenus);
 
+// Get Menu By Id
+
 router.get("/:id", getMenuById);
 
-router.patch("/:id", protect, updateMenu);
-router.delete("/:id", protect, deleteMenu);
+// Update Menu
 
+router.patch(
+  "/:id",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  updateMenu,
+);
+
+// Delete Menu
+router.delete(
+  "/:id",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  deleteMenu,
+);
 export default router;

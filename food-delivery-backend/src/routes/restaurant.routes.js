@@ -8,18 +8,67 @@ import {
   deleteRestaurant,
 } from "../controllers/restaurant.controller.js";
 
-import { protect } from "../middlewares/auth.middleware.js";
+import { protect, authorize } from "../middlewares/auth.middleware.js";
+
+import { ROLES } from "../constants/roles.js";
+
+import {
+  createRestaurantValidator,
+  updateRestaurantValidator,
+} from "../validators/restaurant.validator.js";
+
+import validate from "../middlewares/validation.middleware.js";
 
 const router = express.Router();
 
-router.post("/", protect, createRestaurant);
+// Create Restaurant
+
+router.post(
+  "/",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  createRestaurantValidator,
+
+  validate,
+
+  createRestaurant,
+);
+
+// Get All
 
 router.get("/", getAllRestaurants);
 
+// Get By Id
+
 router.get("/:id", getRestaurantById);
 
-router.patch("/:id", protect, updateRestaurant);
+// Update
+router.patch(
+  "/:id",
 
-router.delete("/:id", protect, deleteRestaurant);
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  updateRestaurantValidator,
+
+  validate,
+
+  updateRestaurant,
+);
+// Delete
+
+router.delete(
+  "/:id",
+
+  protect,
+
+  authorize(ROLES.ADMIN),
+
+  deleteRestaurant,
+);
 
 export default router;

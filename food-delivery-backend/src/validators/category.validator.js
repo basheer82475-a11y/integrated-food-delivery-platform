@@ -22,3 +22,15 @@ export const createCategoryValidator = [
 
   body("image").optional().trim(),
 ];
+export const updateCategoryValidator = [
+  body("name").optional().trim().notEmpty(),
+
+  body("description").optional().trim(),
+
+  body("restaurant")
+    .optional()
+    .isMongoId()
+    .withMessage("Invalid restaurant id"),
+
+  body("image").optional(),
+];

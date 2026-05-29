@@ -34,3 +34,38 @@ export const createRestaurantValidator = [
     .isFloat({ min: 0, max: 5 })
     .withMessage("Rating must be between 0 and 5"),
 ];
+
+export const updateRestaurantValidator = [
+  body("name")
+    .optional()
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .withMessage("Name should be between 2-100 chars"),
+
+  body("email")
+    .optional()
+    .trim()
+    .isEmail()
+    .withMessage("Valid email required")
+    .normalizeEmail(),
+
+  body("phone").optional().trim(),
+
+  body("address").optional().trim(),
+
+  body("city").optional().trim(),
+
+  body("state").optional().trim(),
+
+  body("zipCode").optional().trim(),
+
+  body("deliveryTime")
+    .optional()
+    .isNumeric()
+    .withMessage("Delivery time must be number"),
+
+  body("rating")
+    .optional()
+    .isFloat({ min: 0, max: 5 })
+    .withMessage("Rating must be between 0 and 5"),
+];

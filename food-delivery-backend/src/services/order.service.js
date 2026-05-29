@@ -47,14 +47,20 @@ export const createOrderService = async (orderData, userId) => {
   });
 };
 
-export const getAllOrdersService = async () => {
-  return await Order.find()
+export const getAllOrdersService = async (user) => {
+  let query = {};
+
+  if (user.role === "customer") {
+    query.user = user._id;
+  }
+
+  return await Order.find(query)
     .populate("user", "name email")
     .populate("restaurant", "name")
     .populate("items.menuItem", "name price");
 };
 
-export const getOrderByIdService = async (orderId) => {
+export const getOrderByIdService = async (orderId, currentUser) => {
   const order = await Order.findById(orderId)
     .populate("user", "name email")
     .populate("restaurant", "name")
@@ -64,10 +70,35 @@ export const getOrderByIdService = async (orderId) => {
     throw new ApiError(404, "Order not found");
   }
 
+  if (
+    currentUser.role === "customer" &&
+    order.user._id.toString() !== currentUser._id.toString()
+  ) {
+    throw new ApiError(403, "Access denied");
+  }
+
   return order;
 };
 
 export const updateOrderStatusService = async (orderId, status) => {
+  const allowedStatus = [
+    "pending",
+
+    "confirmed",
+
+    "preparing",
+
+    "out_for_delivery",
+
+    "delivered",
+
+    "cancelled",
+  ];
+
+  if (!allowedStatus.includes(status)) {
+    throw new ApiError(400, "Invalid status");
+  }
+
   const order = await Order.findByIdAndUpdate(
     orderId,
 
@@ -77,6 +108,7 @@ export const updateOrderStatusService = async (orderId, status) => {
 
     {
       new: true,
+      runValidators: true,
     },
   );
 

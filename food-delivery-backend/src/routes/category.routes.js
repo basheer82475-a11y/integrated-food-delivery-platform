@@ -8,18 +8,69 @@ import {
   deleteCategory,
 } from "../controllers/category.controller.js";
 
-import { protect } from "../middlewares/auth.middleware.js";
+import { protect, authorize } from "../middlewares/auth.middleware.js";
+
+import { ROLES } from "../constants/roles.js";
+
+import {
+  createCategoryValidator,
+  updateCategoryValidator,
+} from "../validators/category.validator.js";
+
+import validate from "../middlewares/validation.middleware.js";
 
 const router = express.Router();
 
-router.post("/", protect, createCategory);
+// Create Category
+
+router.post(
+  "/",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  createCategoryValidator,
+
+  validate,
+
+  createCategory,
+);
+
+// Get All Categories
 
 router.get("/", getAllCategories);
 
+// Get Category By Id
+
 router.get("/:id", getCategoryById);
 
-router.patch("/:id", protect, updateCategory);
+// Update Category
 
-router.delete("/:id", protect, deleteCategory);
+router.patch(
+  "/:id",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  updateCategoryValidator,
+
+  validate,
+
+  updateCategory,
+);
+
+// Delete Category
+
+router.delete(
+  "/:id",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  deleteCategory,
+);
 
 export default router;

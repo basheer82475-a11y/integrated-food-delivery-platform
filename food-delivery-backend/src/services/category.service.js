@@ -28,10 +28,10 @@ export const getAllCategoriesService = async () => {
 };
 
 export const getCategoryByIdService = async (categoryId) => {
-  const category = await Category.findById(categoryId).populate(
-    "restaurant",
-    "name city",
-  );
+  const category = await Category.findOne({
+    _id: categoryId,
+    isActive: true,
+  }).populate("restaurant", "name city");
 
   if (!category) {
     throw new ApiError(404, "Category not found");
