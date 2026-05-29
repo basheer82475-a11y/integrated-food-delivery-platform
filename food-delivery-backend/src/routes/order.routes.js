@@ -11,16 +11,60 @@ import { createOrderValidator } from "../validators/order.validator.js";
 
 import validate from "../middlewares/validation.middleware.js";
 
-import { protect } from "../middlewares/auth.middleware.js";
+import { protect, authorize } from "../middlewares/auth.middleware.js";
+
+import { ROLES } from "../constants/roles.js";
 
 const router = express.Router();
 
-router.post("/", protect, createOrderValidator, validate, createOrder);
+// Create Order
 
-router.get("/", protect, getAllOrders);
+router.post(
+  "/",
 
-router.get("/:id", protect, getOrderById);
+  protect,
 
-router.patch("/:id/status", protect, updateOrderStatus);
+  authorize(ROLES.CUSTOMER),
+
+  createOrderValidator,
+
+  validate,
+
+  createOrder,
+);
+
+// Get All Orders
+
+router.get(
+  "/",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  getAllOrders,
+);
+
+// Get Single Order
+
+router.get(
+  "/:id",
+
+  protect,
+
+  getOrderById,
+);
+
+// Update Order Status
+
+router.patch(
+  "/:id/status",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  updateOrderStatus,
+);
 
 export default router;

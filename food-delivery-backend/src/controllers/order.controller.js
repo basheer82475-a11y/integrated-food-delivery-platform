@@ -18,7 +18,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 });
 
 export const getAllOrders = asyncHandler(async (req, res) => {
-  const orders = await getAllOrdersService();
+  const orders = await getAllOrdersService(req.user);
 
   res.status(200).json({
     success: true,
@@ -28,7 +28,7 @@ export const getAllOrders = asyncHandler(async (req, res) => {
 });
 
 export const getOrderById = asyncHandler(async (req, res) => {
-  const order = await getOrderByIdService(req.params.id);
+  const order = await getOrderByIdService(req.params.id, req.user);
 
   res.status(200).json({
     success: true,

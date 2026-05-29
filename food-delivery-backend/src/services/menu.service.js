@@ -62,18 +62,10 @@ export const updateMenuService = async (menuId, updateData) => {
 };
 
 export const deleteMenuService = async (menuId) => {
-  const menu = await Menu.findByIdAndUpdate(
-    menuId,
-    {
-      isAvailable: false,
-    },
-    {
-      new: true,
-    },
-  );
+  const menu = await Menu.findByIdAndDelete(menuId);
 
   if (!menu) {
-    throw new ApiError(404, "Menu item not found");
+    throw new ApiError(404, "Menu not found");
   }
 
   return menu;

@@ -12,11 +12,13 @@ import {
 // ==============================
 // Register User Service
 // ==============================
+
 export const registerUserService = async ({ name, email, password, role }) => {
   validateRegisterInput({
     name,
     email,
     password,
+    role,
   });
 
   const existingUser = await User.findOne({
@@ -31,9 +33,12 @@ export const registerUserService = async ({ name, email, password, role }) => {
 
   const user = await User.create({
     name,
+
     email,
+
     password: hashedPassword,
-    role,
+
+    role: role || "customer",
   });
 
   return user;
@@ -42,6 +47,7 @@ export const registerUserService = async ({ name, email, password, role }) => {
 // ==============================
 // Login User Service
 // ==============================
+
 export const loginUserService = async ({ email, password }) => {
   validateLoginInput({
     email,
