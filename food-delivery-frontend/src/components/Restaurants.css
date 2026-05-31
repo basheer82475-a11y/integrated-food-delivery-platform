@@ -1,0 +1,41 @@
+.restaurants-section {
+  background: #111;
+  color: white;
+  padding: 100px 50px;
+  min-height: 100vh;
+}
+
+.restaurants-section h2 {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 50px;
+  color: gold;
+}
+
+.restaurant-grid {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.restaurant-card {
+  width: 320px;
+  background: #1c1c1c;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.restaurant-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.restaurant-card h3 {
+  padding: 15px;
+}
+
+.restaurant-card p {
+  padding: 0 15px 20px;
+}

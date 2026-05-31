@@ -1,42 +1,35 @@
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
 function Navbar() {
   return (
-    <nav className="absolute top-0 left-0 w-full z-50">
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="fixed top-0 left-0 w-full z-50 bg-black/30 backdrop-blur-xl border-b border-orange-500/20"
+    >
+      <div className="max-w-7xl mx-auto flex justify-between items-center p-5">
 
-      <div className="flex justify-between items-center px-16 py-8">
+        <h1 className="text-3xl font-bold text-orange-500">
+          LUXORA
+        </h1>
 
-        {/* Logo */}
-        <div>
+        <div className="hidden md:flex gap-8 text-white">
 
-          <h1 className="text-5xl font-serif text-white">
-            LUXORA
-          </h1>
-
-          <p className="text-[10px] tracking-[5px] text-zinc-300 mt-2">
-            CULINARY EXCELLENCE
-          </p>
-
-        </div>
-
-        {/* Menu */}
-        <div className="hidden lg:flex gap-12 text-sm tracking-[2px] text-white">
-
-          <a href="#">HOME</a>
-          <a href="#">RESTAURANT</a>
-          <a href="#">MENU</a>
-          <a href="#">CATERING</a>
-          <a href="#">EXPERIENCE</a>
-          <a href="#">CONTACT</a>
+          <Link to="/">Home</Link>
+          <Link to="/restaurants">Restaurants</Link>
+          <Link to="/menu">Menu</Link>
+          <Link to="/experience">Experience</Link>
+          <Link to="/contact">Contact</Link>
 
         </div>
 
-        {/* Button */}
-        <button className="bg-[#c89b63] text-black px-8 py-4 rounded-md font-semibold">
-          RESERVE A TABLE
+        <button className="bg-orange-500 px-5 py-2 rounded-full hover:scale-110 duration-300 shadow-lg shadow-orange-500/50">
+          Reserve Table
         </button>
 
       </div>
-
-    </nav>
+    </motion.nav>
   );
 }
 

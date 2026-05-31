@@ -1,24 +1,28 @@
-import Navbar from "./components/Navbar";
-import bg from "./assets/luxora.png";
+import { Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Restaurants from "./pages/Restaurants";
+import Contact from "./pages/Contact";
+import Menu from "./pages/Menu";
+import Experience from "./pages/Experience";
+//import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import Payment from "./pages/Payment";
 
 function App() {
   return (
-    <div className="h-screen overflow-hidden bg-black text-white">
+    <Routes>
 
-      <Navbar />
+      <Route path="/" element={<Home />} />
+      <Route path="/restaurants" element={<Restaurants />} />
+      <Route path="/menu" element={<Menu />} />
+      <Route path="/experience" element={<Experience />} />
+      <Route path="/contact" element={<Contact />} />
+    
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/payment" element={<Payment />} />
 
-      {/* Full Hero Image */}
-      <div className="relative w-full h-screen">
-
-        <img
-          src={bg}
-          alt="luxury-food"
-          className="w-full h-full object-cover"
-        />
-
-      </div>
-
-    </div>
+    </Routes>
   );
 }
 
