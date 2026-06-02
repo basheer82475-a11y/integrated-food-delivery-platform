@@ -1,29 +1,21 @@
-import { useEffect, useState } from "react";
-import api from "../api/axios";
+import restaurants from "../data/restaurants";
+import RestaurantCard from "../components/RestaurantCard";
 
 function Restaurants() {
-  const [restaurants, setRestaurants] = useState([]);
-
-  useEffect(() => {
-    api
-      .get("/restaurants")
-      .then((res) => {
-        setRestaurants(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
   return (
-    <div>
-      <h1>Restaurants</h1>
+    <div className="bg-black min-h-screen text-white p-10">
+      <h1 className="text-5xl text-orange-500 mb-10">
+        Restaurants
+      </h1>
 
-      {restaurants.map((restaurant) => (
-        <div key={restaurant._id}>
-          <h2>{restaurant.name}</h2>
-        </div>
-      ))}
+      <div className="grid md:grid-cols-4 gap-6">
+        {restaurants.map((restaurant) => (
+          <RestaurantCard
+            key={restaurant.id}
+            restaurant={restaurant}
+          />
+        ))}
+      </div>
     </div>
   );
 }
