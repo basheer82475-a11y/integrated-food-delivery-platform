@@ -2,39 +2,53 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 w-full z-50">
-      <div className="flex items-center justify-between px-8 py-6">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-orange-500/20">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
+
         {/* Logo */}
         <div>
-          <h1 className="text-4xl font-serif text-white">LUXORA</h1>
-          <p className="text-[10px] tracking-[5px] text-zinc-300 mt-1">
+          <h1 className="text-3xl font-bold text-orange-500">
+            LUXORA
+          </h1>
+          <p className="text-xs tracking-[4px] text-gray-400">
             CULINARY EXCELLENCE
           </p>
         </div>
 
-        {/* Links */}
-        <div className="hidden lg:flex items-center gap-10 text-sm tracking-[2px] text-white">
-          <Link to="/" className="hover:text-[#c89b63]">
-            HOME
+        {/* Navigation Links */}
+        <div className="hidden md:flex items-center gap-8 text-white">
+          <Link to="/" className="hover:text-orange-500 transition">
+            Home
           </Link>
-          <Link to="/menu" className="hover:text-[#c89b63]">
-            MENU
+
+          <Link to="/restaurants" className="hover:text-orange-500 transition">
+            Restaurants
           </Link>
-          <Link to="/restaurant" className="hover:text-[#c89b63]">
-            RESTAURANTS
+
+          <Link to="/hospitality" className="hover:text-orange-500 transition">
+            Hospitality
           </Link>
-          <Link to="/cart" className="hover:text-[#c89b63]">
-            CART
+
+          <Link to="/reviews" className="hover:text-orange-500 transition">
+            Reviews
           </Link>
-          <Link to="/login" className="hover:text-[#c89b63]">
-            LOGIN
+
+          <Link to="/contact" className="hover:text-orange-500 transition">
+            Contact
+          </Link>
+
+          <Link to="/cart" className="hover:text-orange-500 transition">
+            Cart
           </Link>
         </div>
 
-        {/* Button */}
-        <button className="bg-[#c89b63] text-black px-6 py-3 rounded-md font-semibold">
-          RESERVE A TABLE
-        </button>
+        {/* Reserve Button */}
+        <Link to="/booking">
+          <button className="bg-orange-500 hover:bg-orange-600 px-5 py-2 rounded-lg font-semibold transition text-black">
+            Reserve Table
+          </button>
+        </Link>
+
       </div>
     </nav>
   );
