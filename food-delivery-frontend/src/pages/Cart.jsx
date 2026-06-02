@@ -1,3 +1,4 @@
+
 import Navbar from "../components/Navbar";
 
 function Cart() {
@@ -13,9 +14,18 @@ function Cart() {
         <p className="mt-5">
           Selected food items will appear here.
         </p>
+
+function Cart() {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-8">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold">Cart</h2>
+        <p className="mt-2">This is the Cart page.</p>
+
       </div>
     </div>
   );
 }
+
 
 export default Cart;
