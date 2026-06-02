@@ -8,11 +8,11 @@ function RestaurantCard({ restaurant }) {
         <img
           src={restaurant.image}
           alt={restaurant.name}
-          className="w-full h-56 object-cover"
+          className="w-full h-52 object-cover"
         />
 
         <div className="p-4">
-          <h2 className="text-2xl font-bold text-orange-500">
+          <h2 className="text-orange-500 text-xl font-bold">
             {restaurant.name}
           </h2>
 
