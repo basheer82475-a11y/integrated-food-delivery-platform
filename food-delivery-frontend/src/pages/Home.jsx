@@ -1,3 +1,4 @@
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
@@ -35,3 +36,19 @@ function Home() {
 }
 
 export default Home;
+
+function Home() {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-8">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold">Home</h2>
+        <p className="mt-2">This is the Home page.</p>
+      </div>
+    </div>
+  );
+}
+
+export default Home;
+
+
+

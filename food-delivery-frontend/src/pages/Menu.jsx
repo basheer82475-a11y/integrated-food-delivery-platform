@@ -1,9 +1,11 @@
 function Menu() {
 
+
   return <h1>Menu Page</h1>;
 }
 
 export default Menu;
+
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8">
@@ -13,6 +15,8 @@ export default Menu;
       </div>
     </div>
   );
+
+}
 
 
 export default Menu;
