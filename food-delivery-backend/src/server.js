@@ -1,24 +1,34 @@
-require("dotenv").config();
+import app from "./app.js";
+import { env } from "./config/env.js";
+import connectDatabase from "./config/database.js";
 
-const app = require("./app");
-const connectDB = require("./config/db");
+const PORT = env.port;
 
-const PORT = process.env.PORT || 5000;
+let server;
 
-/*
-|--------------------------------------------------------------------------
-| Database Connection
-|--------------------------------------------------------------------------
-*/
+const startServer = async () => {
+  try {
+    await connectDatabase();
 
-connectDB();
+    server = app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
 
-/*
-|--------------------------------------------------------------------------
-| Start Server
-|--------------------------------------------------------------------------
-*/
+    process.exit(1);
+  }
+};
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+startServer();
+
+// Graceful Shutdown
+process.on("SIGINT", () => {
+  console.log("Shutting down server...");
+
+  server.close(() => {
+    console.log("Server stopped");
+
+    process.exit(0);
+  });
 });

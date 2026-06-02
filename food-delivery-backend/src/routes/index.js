@@ -1,29 +1,20 @@
-const express = require("express");
+import express from "express";
 
-const authRoutes = require("../modules/auth/routes/auth.routes");
+import { healthCheck } from "../controllers/health.controller.js";
+
+import authRoutes from "./auth.routes.js";
+import restaurantRoutes from "./restaurant.routes.js";
+import categoryRoutes from "./category.routes.js";
+import menuRoutes from "./menu.routes.js";
+import orderRoutes from "./order.routes.js";
 
 const router = express.Router();
 
-/*
-|--------------------------------------------------------------------------
-| Health Route
-|--------------------------------------------------------------------------
-*/
-
-router.get("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "API Working Successfully",
-  });
-});
-router.use("/auth", authRoutes);
-
-/*
-|--------------------------------------------------------------------------
-| Auth Routes
-|--------------------------------------------------------------------------
-*/
+router.get("/health", healthCheck);
 
 router.use("/auth", authRoutes);
-
-module.exports = router;
+router.use("/restaurants", restaurantRoutes);
+router.use("/categories", categoryRoutes);
+router.use("/menus", menuRoutes);
+router.use("/orders", orderRoutes);
+export default router;

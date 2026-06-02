@@ -1,45 +1,68 @@
 import { useParams } from "react-router-dom";
 import restaurants from "../data/restaurants";
+import menuItems from "../data/menuItems";
+import Navbar from "../components/Navbar";
 
 function RestaurantDetails() {
-
   const { id } = useParams();
 
   const restaurant = restaurants.find(
-    (r) => r.id === parseInt(id)
+    (r) => r.id === Number(id)
+  );
+
+  const items = menuItems.filter(
+    (item) => item.restaurantId === Number(id)
   );
 
   return (
-    <div className="min-h-screen bg-black text-white p-10">
+    <div className="bg-black min-h-screen text-white">
 
-      <h1 className="text-5xl font-bold mb-10">
-        {restaurant.name}
-      </h1>
+      <Navbar />
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="p-10">
 
-        {restaurant.items.map((item) => (
+        <h1 className="text-5xl text-orange-500">
+          {restaurant?.name}
+        </h1>
 
-          <div
-            key={item.id}
-            className="bg-zinc-900 p-8 rounded-2xl"
-          >
+        <p className="mt-4">
+          ⭐ {restaurant?.rating}
+        </p>
 
-            <h2 className="text-3xl font-semibold">
-              {item.name}
-            </h2>
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
 
-            <p className="text-orange-400 mt-3 text-xl">
-              ₹ {item.price}
-            </p>
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="bg-gray-900 rounded-xl overflow-hidden"
+            >
 
-            <button className="mt-5 bg-orange-400 text-black px-6 py-3 rounded-xl font-semibold hover:scale-105 transition-all">
-              Add To Cart
-            </button>
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-52 object-cover"
+              />
 
-          </div>
+              <div className="p-4">
 
-        ))}
+                <h2 className="text-xl font-bold">
+                  {item.name}
+                </h2>
+
+                <p className="mt-2">
+                  ₹{item.price}
+                </p>
+
+                <button className="bg-orange-500 px-4 py-2 mt-4 rounded">
+                  Add To Cart
+                </button>
+
+              </div>
+
+            </div>
+          ))}
+
+        </div>
 
       </div>
 

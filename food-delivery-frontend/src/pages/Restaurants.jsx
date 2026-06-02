@@ -1,32 +1,29 @@
-import Navbar from "../components/Navbar";
-import RestaurantCard from "../components/RestaurantCard";
-import restaurants from "../data/restaurants";
+import { useEffect, useState } from "react";
+import api from "../api/axios";
 
 function Restaurants() {
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    api
+      .get("/restaurants")
+      .then((res) => {
+        setRestaurants(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
-    <div className="bg-black min-h-screen text-white">
+    <div>
+      <h1>Restaurants</h1>
 
-      <Navbar />
-
-      <div className="max-w-7xl mx-auto pt-32 px-5">
-
-        <h1 className="text-5xl font-bold text-orange-500 mb-10">
-          Restaurants
-        </h1>
-
-        <div className="grid md:grid-cols-3 gap-8">
-
-          {restaurants.map((restaurant) => (
-            <RestaurantCard
-              key={restaurant.id}
-              restaurant={restaurant}
-            />
-          ))}
-
+      {restaurants.map((restaurant) => (
+        <div key={restaurant._id}>
+          <h2>{restaurant.name}</h2>
         </div>
-
-      </div>
-
+      ))}
     </div>
   );
 }
