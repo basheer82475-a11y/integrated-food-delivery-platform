@@ -2,18 +2,6 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-
-    <nav className="bg-black text-white p-5 flex justify-between">
-      <h1 className="text-2xl font-bold text-orange-500">
-        LUXORA
-      </h1>
-
-      <div className="flex gap-6">
-        <Link to="/">Home</Link>
-        <Link to="/restaurants">Restaurants</Link>
-        <Link to="/experience">Experience</Link>
-        <Link to="/contact">Contact</Link>
-
     <nav className="fixed top-0 left-0 w-full z-50">
       <div className="flex items-center justify-between px-8 py-6">
         {/* Logo */}
@@ -32,7 +20,7 @@ function Navbar() {
           <Link to="/menu" className="hover:text-[#c89b63]">
             MENU
           </Link>
-           <Link to="/restaurant" className="hover:text-[#c89b63]">
+          <Link to="/restaurant" className="hover:text-[#c89b63]">
             RESTAURANTS
           </Link>
           <Link to="/cart" className="hover:text-[#c89b63]">
@@ -47,12 +35,9 @@ function Navbar() {
         <button className="bg-[#c89b63] text-black px-6 py-3 rounded-md font-semibold">
           RESERVE A TABLE
         </button>
-
       </div>
     </nav>
   );
 }
 
 export default Navbar;
-
-
