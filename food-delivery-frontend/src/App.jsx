@@ -16,7 +16,7 @@ import Reviews from "./pages/Reviews";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-
+import Admin from "./pages/Admin";
 import bg from "./assets/luxora.png";
 
 function App() {
@@ -52,6 +52,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </div>
       </div>
