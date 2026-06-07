@@ -12,8 +12,8 @@ export const createMenuService = async (menuData) => {
 
   const category = await Category.findById(menuData.category);
 
-  if (!category) {
-    throw new ApiError(404, "Category not found");
+  if (category.restaurant.toString() !== restaurant._id.toString()) {
+    throw new ApiError(400, "Category does not belong to restaurant");
   }
 
   const existingMenu = await Menu.findOne({
