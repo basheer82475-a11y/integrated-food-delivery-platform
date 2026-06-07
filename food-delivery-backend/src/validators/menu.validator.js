@@ -45,3 +45,33 @@ export const createMenuValidator = [
 
   body("isAvailable").optional().isBoolean(),
 ];
+export const updateMenuValidator = [
+  body("name")
+    .optional()
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .withMessage("Name must be between 2 and 100 chars"),
+
+  body("description").optional().trim(),
+
+  body("price")
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage("Price must be greater than or equal to 0"),
+
+  body("restaurant")
+    .optional()
+    .isMongoId()
+    .withMessage("Invalid restaurant id"),
+
+  body("category").optional().isMongoId().withMessage("Invalid category id"),
+
+  body("preparationTime")
+    .optional()
+    .isNumeric()
+    .withMessage("Preparation time must be numeric"),
+
+  body("isVeg").optional().isBoolean(),
+
+  body("isAvailable").optional().isBoolean(),
+];

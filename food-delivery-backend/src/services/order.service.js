@@ -16,8 +16,8 @@ export const createOrderService = async (orderData, userId) => {
     orderData.items.map(async (item) => {
       const menuItem = await Menu.findById(item.menuItem);
 
-      if (!menuItem) {
-        throw new ApiError(404, "Menu item not found");
+      if (menuItem.restaurant.toString() !== orderData.restaurant.toString()) {
+        throw new ApiError(400, "Menu item does not belong to restaurant");
       }
 
       totalAmount += menuItem.price * item.quantity;

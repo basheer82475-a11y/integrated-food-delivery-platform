@@ -13,6 +13,8 @@ import validate from "../middlewares/validation.middleware.js";
 
 import { protect, authorize } from "../middlewares/auth.middleware.js";
 
+import { checkOrderOwnership } from "../middlewares/ownership.middleware.js";
+
 import { ROLES } from "../constants/roles.js";
 
 const router = express.Router();
@@ -40,11 +42,10 @@ router.get(
 
   protect,
 
-  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER, ROLES.CUSTOMER),
 
   getAllOrders,
 );
-
 // Get Single Order
 
 router.get(
@@ -64,7 +65,8 @@ router.patch(
 
   authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
 
+  checkOrderOwnership,
+
   updateOrderStatus,
 );
-
 export default router;
