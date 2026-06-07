@@ -10,6 +10,8 @@ import {
 
 import { protect, authorize } from "../middlewares/auth.middleware.js";
 
+import { checkRestaurantOwnership } from "../middlewares/ownership.middleware.js";
+
 import { ROLES } from "../constants/roles.js";
 
 import {
@@ -48,26 +50,21 @@ router.get("/:id", getRestaurantById);
 // Update
 router.patch(
   "/:id",
-
   protect,
-
   authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
-
+  checkRestaurantOwnership,
   updateRestaurantValidator,
-
   validate,
-
   updateRestaurant,
 );
+
 // Delete
 
 router.delete(
   "/:id",
-
   protect,
-
-  authorize(ROLES.ADMIN),
-
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+  checkRestaurantOwnership,
   deleteRestaurant,
 );
 

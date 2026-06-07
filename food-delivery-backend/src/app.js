@@ -47,11 +47,12 @@ app.use(
 // ==============================
 // Body Parsers
 // ==============================
-app.use(express.json());
+app.use(express.json({ limit: "10kb" }));
 
 app.use(
   express.urlencoded({
     extended: true,
+    limit: "10kb",
   }),
 );
 
