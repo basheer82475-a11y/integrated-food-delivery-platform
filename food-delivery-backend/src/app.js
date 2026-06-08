@@ -37,12 +37,14 @@ app.use(limiter);
 app.use(hpp());
 
 // Enable CORS
+// IMPORTANT: when credentials=true, origin cannot be '*'
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     credentials: true,
   }),
 );
+
 
 // ==============================
 // Body Parsers
