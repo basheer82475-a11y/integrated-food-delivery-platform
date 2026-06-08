@@ -36,7 +36,7 @@ function Home() {
 
         <div style={{ zIndex: 2 }}>
           <h1 style={{ fontSize: "3rem", marginBottom: "20px" }}>
-            Welcome to Food Delivery 🍽️
+            Welcome to  Luxora 🍽️
           </h1>
 
           <p style={{ fontSize: "1.2rem", marginBottom: "30px" }}>

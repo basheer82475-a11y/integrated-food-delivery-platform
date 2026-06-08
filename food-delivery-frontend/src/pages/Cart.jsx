@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const [cart, setCart] = useState(() => {
@@ -90,9 +91,10 @@ function Cart() {
                 Taxes and delivery fees may apply at checkout.
               </p>
 
-              <button className="mt-6 w-full bg-orange-500 hover:bg-orange-400 px-6 py-3 rounded-lg transition">
+             <Link to= "/checkout"> <button className="mt-6 w-full bg-orange-500 hover:bg-orange-400 px-6 py-3 rounded-lg transition">
                 Checkout
               </button>
+              </Link>
             </div>
           </div>
         )}
