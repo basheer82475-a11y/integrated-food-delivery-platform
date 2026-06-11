@@ -41,15 +41,22 @@ function Navbar() {
             Cart
           </Link>
         </div>
-<Link to="/login" className="hover:text-orange-500 transition">
+
+        <div className="hidden md:flex items-center gap-8">
+          <Link
+            to="/login"
+            className="hover:text-orange-500 transition"
+          >
             Login
           </Link>
-        {/* Reserve Button */}
-        <Link to="/booking">
-          <button className="bg-orange-500 hover:bg-orange-600 px-5 py-2 rounded-lg font-semibold transition text-black">
-            Reserve Table
-          </button>
-        </Link>
+
+          <Link to="/booking">
+            <button className="bg-orange-500 hover:bg-orange-600 px-5 py-2 rounded-lg font-semibold transition text-black">
+              Reserve Table
+            </button>
+          </Link>
+        </div>
+
 
       </div>
     </nav>
