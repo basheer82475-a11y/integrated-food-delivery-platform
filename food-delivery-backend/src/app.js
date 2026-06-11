@@ -36,13 +36,15 @@ app.use(limiter);
 // Prevent HTTP Parameter Pollution
 app.use(hpp());
 
-// Enable CORS
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  }),
-);
+// Enable CORS (no wildcard when using credentials)
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
+
 
 // ==============================
 // Body Parsers
