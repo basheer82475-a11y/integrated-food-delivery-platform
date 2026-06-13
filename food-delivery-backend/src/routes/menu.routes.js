@@ -8,9 +8,14 @@ import {
   deleteMenu,
 } from "../controllers/menu.controller.js";
 
-import { createMenuValidator } from "../validators/menu.validator.js";
+import {
+  createMenuValidator,
+  updateMenuValidator,
+} from "../validators/menu.validator.js";
 
 import validate from "../middlewares/validation.middleware.js";
+
+import { checkMenuOwnership } from "../middlewares/ownership.middleware.js";
 
 import { protect, authorize } from "../middlewares/auth.middleware.js";
 
@@ -51,6 +56,12 @@ router.patch(
 
   authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
 
+  checkMenuOwnership,
+
+  updateMenuValidator,
+
+  validate,
+
   updateMenu,
 );
 
@@ -61,6 +72,7 @@ router.delete(
   protect,
 
   authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+  checkMenuOwnership,
 
   deleteMenu,
 );

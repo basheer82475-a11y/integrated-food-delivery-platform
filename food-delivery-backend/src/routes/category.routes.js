@@ -10,6 +10,8 @@ import {
 
 import { protect, authorize } from "../middlewares/auth.middleware.js";
 
+import { checkCategoryOwnership } from "../middlewares/ownership.middleware.js";
+
 import { ROLES } from "../constants/roles.js";
 
 import {
@@ -56,6 +58,8 @@ router.patch(
 
   updateCategoryValidator,
 
+  checkCategoryOwnership,
+
   validate,
 
   updateCategory,
@@ -69,6 +73,8 @@ router.delete(
   protect,
 
   authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  checkCategoryOwnership,
 
   deleteCategory,
 );
