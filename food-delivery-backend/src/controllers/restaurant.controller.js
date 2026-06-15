@@ -9,7 +9,14 @@ import {
 } from "../services/restaurant.service.js";
 
 export const createRestaurant = asyncHandler(async (req, res) => {
-  const restaurant = await createRestaurantService(req.body, req.user._id);
+  const restaurantData = req.body;
+
+  // If image is uploaded, add the image path to the data
+  if (req.file) {
+    restaurantData.image = `/uploads/${req.file.filename}`;
+  }
+
+  const restaurant = await createRestaurantService(restaurantData, req.user._id);
 
   res.status(201).json({
     success: true,
@@ -38,7 +45,14 @@ export const getRestaurantById = asyncHandler(async (req, res) => {
 });
 
 export const updateRestaurant = asyncHandler(async (req, res) => {
-  const restaurant = await updateRestaurantService(req.params.id, req.body);
+  const restaurantData = req.body;
+
+  // If image is uploaded, add the image path to the data
+  if (req.file) {
+    restaurantData.image = `/uploads/${req.file.filename}`;
+  }
+
+  const restaurant = await updateRestaurantService(req.params.id, restaurantData);
 
   res.status(200).json({
     success: true,

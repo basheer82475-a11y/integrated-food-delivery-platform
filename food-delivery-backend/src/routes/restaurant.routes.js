@@ -20,6 +20,7 @@ import {
 } from "../validators/restaurant.validator.js";
 
 import validate from "../middlewares/validation.middleware.js";
+import upload from "../config/multer.js";
 
 const router = express.Router();
 
@@ -31,6 +32,8 @@ router.post(
   protect,
 
   authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  upload.single("image"),
 
   createRestaurantValidator,
 
@@ -53,6 +56,7 @@ router.patch(
   protect,
   authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
   checkRestaurantOwnership,
+  upload.single("image"),
   updateRestaurantValidator,
   validate,
   updateRestaurant,

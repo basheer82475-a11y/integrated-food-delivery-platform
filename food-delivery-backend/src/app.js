@@ -6,11 +6,16 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import hpp from "hpp";
 import rateLimit from "express-rate-limit";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import routes from "./routes/index.js";
 
 import errorMiddleware from "./middlewares/error.middleware.js";
 import notFoundMiddleware from "./middlewares/notFound.middleware.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -36,9 +41,22 @@ app.use(limiter);
 // Prevent HTTP Parameter Pollution
 app.use(hpp());
 
-// Enable CORS (no wildcard when using credentials)
+// Enable CORS - allow multiple frontend ports during development
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:5175",
+      "http://localhost:3000",
+    ];
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -46,6 +64,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
+
+// ==============================
+// Static File Serving
+// ==============================
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // ==============================
 // Body Parsers
