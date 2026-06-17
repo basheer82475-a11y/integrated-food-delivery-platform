@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import api from "../api/axios";
 import Navbar from "../components/Navbar";
@@ -23,6 +24,7 @@ function Checkout() {
   }, []);
 
   const restaurantId = useMemo(() => {
+    // Checkout must use the same restaurant for all cart items.
     const first = cart[0];
     return first?.restaurantId ?? null;
   }, [cart]);
@@ -33,7 +35,12 @@ function Checkout() {
     const byId = new Map();
 
     for (const item of cart) {
-      const id = item.id;
+      // Cart items are stored from RestaurantDetails as {_id, name, price, restaurantId, ...}
+      // Backend expects items[].menuItem to be a menu item's MongoId.
+      const id = item.menuItemId || item._id || item.id;
+
+      if (!id) continue;
+
       const existing = byId.get(id);
       if (existing) {
         existing.quantity += 1;
@@ -41,10 +48,13 @@ function Checkout() {
         byId.set(id, {
           menuItem: id,
           quantity: 1,
+          // price for order calculation is validated on backend from Menu anyway,
+          // but still send a number to satisfy validator.
           price: Number(item.price || 0),
         });
       }
     }
+
 
     return Array.from(byId.values());
   }, [cart]);
@@ -92,15 +102,23 @@ function Checkout() {
       }
 
       localStorage.setItem("lastOrderId", orderId);
-      localStorage.removeItem("cart");
 
-      navigate(`/tracking?orderId=${orderId}`);
+      if (paymentMethod === "ONLINE") {
+        // Redirect to payment page for online payment
+        navigate(`/payment?orderId=${orderId}`);
+      } else {
+        // For COD, clear cart and go to tracking
+        localStorage.removeItem("cart");
+        toast.success("Order placed successfully!");
+        navigate(`/tracking?orderId=${orderId}`);
+      }
     } catch (e) {
       const msg =
         e?.response?.data?.message ||
         e?.message ||
         "Failed to create order";
       setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -141,7 +159,7 @@ function Checkout() {
                 onClick={() => setPaymentMethod("COD")}
                 className={
                   paymentMethod === "COD"
-                    ? "bg-orange-500 text-black px-4 py-2 rounded"
+                    ? "bg-orange-500 text-black px-4 py-2 rounded font-semibold"
                     : "bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
                 }
               >
@@ -153,11 +171,11 @@ function Checkout() {
                 onClick={() => setPaymentMethod("ONLINE")}
                 className={
                   paymentMethod === "ONLINE"
-                    ? "bg-orange-500 text-black px-4 py-2 rounded"
+                    ? "bg-orange-500 text-black px-4 py-2 rounded font-semibold"
                     : "bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
                 }
               >
-                Online
+                Online Payment
               </button>
             </div>
           </div>
@@ -178,7 +196,7 @@ function Checkout() {
           <button
             onClick={handleCreateOrder}
             disabled={loading}
-            className="w-full mt-2 bg-orange-500 hover:bg-orange-600 py-3 rounded-lg font-semibold disabled:opacity-60"
+            className="w-full mt-2 bg-orange-500 hover:bg-orange-600 py-3 rounded-lg font-semibold disabled:opacity-60 disabled:cursor-not-allowed transition"
           >
             {loading ? "Creating Order..." : "Place Order"}
           </button>

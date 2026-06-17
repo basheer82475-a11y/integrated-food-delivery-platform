@@ -1,4 +1,8 @@
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "./components/Navbar";
 
@@ -21,42 +25,45 @@ import bg from "./assets/luxora.png";
 
 function App() {
   return (
-    <div
-      className="min-h-screen text-white"
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
-      <div className="min-h-screen bg-black/60">
-        <Navbar />
+    <AuthProvider>
+      <div
+        className="min-h-screen text-white"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <div className="min-h-screen bg-black/60">
+          <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+          <Navbar />
 
-        <div className="pt-24">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/restaurants" element={<Restaurants />} />
-            <Route
-              path="/restaurant/:id"
-              element={<RestaurantDetails />}
-            />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/tracking" element={<Tracking />} />
-            <Route path="/booking" element={<Booking />} />
-            <Route path="/hospitality" element={<Hospitality />} />
-            <Route path="/experience" element={<Experience />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
+          <div className="pt-24">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/restaurants" element={<Restaurants />} />
+              <Route
+                path="/restaurant/:id"
+                element={<RestaurantDetails />}
+              />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+              <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+              <Route path="/tracking" element={<ProtectedRoute><Tracking /></ProtectedRoute>} />
+              <Route path="/booking" element={<Booking />} />
+              <Route path="/hospitality" element={<Hospitality />} />
+              <Route path="/experience" element={<Experience />} />
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><Admin /></ProtectedRoute>} />
+            </Routes>
+          </div>
         </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 }
 
