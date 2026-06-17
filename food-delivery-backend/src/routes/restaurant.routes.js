@@ -6,6 +6,7 @@ import {
   getRestaurantById,
   updateRestaurant,
   deleteRestaurant,
+  getMyRestaurants,
 } from "../controllers/restaurant.controller.js";
 
 import { protect, authorize } from "../middlewares/auth.middleware.js";
@@ -42,6 +43,15 @@ router.post(
 // Get All
 
 router.get("/", getAllRestaurants);
+router.get(
+  "/my-restaurants",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  getMyRestaurants,
+);
 
 // Get By Id
 

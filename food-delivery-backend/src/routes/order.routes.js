@@ -5,6 +5,7 @@ import {
   getAllOrders,
   getOrderById,
   updateOrderStatus,
+  getMyOrders,
 } from "../controllers/order.controller.js";
 
 import { createOrderValidator } from "../validators/order.validator.js";
@@ -45,6 +46,16 @@ router.get(
   authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER, ROLES.CUSTOMER),
 
   getAllOrders,
+);
+
+router.get(
+  "/my-orders",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  getMyOrders,
 );
 // Get Single Order
 

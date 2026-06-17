@@ -1,0 +1,6 @@
+{
+  "$schema": "https://assets.requestly.com/local/v1.11.0/body.json",
+  "contentType": "raw",
+  "raw": "{\n  \"addressId\": \"6a32249fc33cf0c530232ce1\",\n  \"paymentMethod\": \"COD\"\n}",
+  "rawContentType": "application/json"
+}

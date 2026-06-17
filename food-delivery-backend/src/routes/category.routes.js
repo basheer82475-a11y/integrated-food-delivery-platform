@@ -6,6 +6,7 @@ import {
   getCategoryById,
   updateCategory,
   deleteCategory,
+  getMyCategories,
 } from "../controllers/category.controller.js";
 
 import { protect, authorize } from "../middlewares/auth.middleware.js";
@@ -43,6 +44,15 @@ router.post(
 
 router.get("/", getAllCategories);
 
+router.get(
+  "/my-categories",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  getMyCategories,
+);
 // Get Category By Id
 
 router.get("/:id", getCategoryById);

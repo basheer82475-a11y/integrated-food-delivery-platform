@@ -5,6 +5,7 @@ import {
   getAllOrdersService,
   getOrderByIdService,
   updateOrderStatusService,
+  getMyOrdersService,
 } from "../services/order.service.js";
 
 export const createOrder = asyncHandler(async (req, res) => {
@@ -46,5 +47,14 @@ export const updateOrderStatus = asyncHandler(async (req, res) => {
     success: true,
     message: "Order status updated",
     data: order,
+  });
+});
+export const getMyOrders = asyncHandler(async (req, res) => {
+  const orders = await getMyOrdersService(req.user._id);
+
+  res.status(200).json({
+    success: true,
+    count: orders.length,
+    data: orders,
   });
 });

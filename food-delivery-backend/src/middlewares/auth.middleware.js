@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
-
 import User from "../models/user.model.js";
 
 import ApiError from "../utils/ApiError.js";
+
+import { verifyAccessToken } from "../utils/token.utils.js";
 
 // ==============================
 // Protect Middleware
@@ -10,13 +10,24 @@ import ApiError from "../utils/ApiError.js";
 
 export const protect = async (req, res, next) => {
   try {
-    const token = req.cookies?.accessToken;
+    let token = null;
+
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer ")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+
+    if (!token && req.cookies?.accessToken) {
+      token = req.cookies.accessToken;
+    }
 
     if (!token) {
       return next(new ApiError(401, "Access denied. Please login"));
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = verifyAccessToken(token);
 
     const user = await User.findById(decoded.id).select("-password");
 

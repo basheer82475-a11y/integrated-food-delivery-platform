@@ -6,6 +6,7 @@ import {
   getMenuByIdService,
   updateMenuService,
   deleteMenuService,
+  getMyMenusService,
 } from "../services/menu.service.js";
 
 export const createMenu = asyncHandler(async (req, res) => {
@@ -53,5 +54,14 @@ export const deleteMenu = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Menu deleted successfully",
+  });
+});
+export const getMyMenus = asyncHandler(async (req, res) => {
+  const menus = await getMyMenusService(req.user._id);
+
+  res.status(200).json({
+    success: true,
+    count: menus.length,
+    data: menus,
   });
 });

@@ -6,6 +6,7 @@ import {
   getMenuById,
   updateMenu,
   deleteMenu,
+  getMyMenus,
 } from "../controllers/menu.controller.js";
 
 import {
@@ -42,6 +43,16 @@ router.post(
 // Get All Menus
 
 router.get("/", getAllMenus);
+
+router.get(
+  "/my-menus",
+
+  protect,
+
+  authorize(ROLES.ADMIN, ROLES.RESTAURANT_OWNER),
+
+  getMyMenus,
+);
 
 // Get Menu By Id
 

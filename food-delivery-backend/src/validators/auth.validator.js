@@ -1,31 +1,18 @@
 import validator from "validator";
-
 import ApiError from "../utils/ApiError.js";
-
-// ==============================
-// Allowed Roles
-// ==============================
-
-const allowedRoles = ["customer", "restaurant_owner", "admin"];
 
 // ==============================
 // Validate Register Input
 // ==============================
 
-export const validateRegisterInput = ({ name, email, password, role }) => {
-  // Required Fields
-
+export const validateRegisterInput = ({ name, email, password }) => {
   if (!name || !email || !password) {
     throw new ApiError(400, "All fields are required");
   }
 
-  // Name Validation
-
   if (name.trim().length < 2) {
     throw new ApiError(400, "Name must be at least 2 characters");
   }
-
-  // Email Validation
 
   if (
     !validator.isEmail(email, {
@@ -35,8 +22,6 @@ export const validateRegisterInput = ({ name, email, password, role }) => {
   ) {
     throw new ApiError(400, "Please provide a valid email address");
   }
-
-  // Password Validation
 
   if (
     !validator.isStrongPassword(password, {
@@ -51,12 +36,6 @@ export const validateRegisterInput = ({ name, email, password, role }) => {
       400,
       "Password must contain uppercase, lowercase and number",
     );
-  }
-
-  // Role Validation
-
-  if (role && !allowedRoles.includes(role)) {
-    throw new ApiError(400, "Invalid role selected");
   }
 };
 

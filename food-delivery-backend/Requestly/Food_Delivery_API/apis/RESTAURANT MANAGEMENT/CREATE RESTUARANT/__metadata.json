@@ -1,0 +1,10 @@
+{
+  "$schema": "https://assets.requestly.com/local/v1.11.0/metadata.json",
+  "type": "api",
+  "entryType": "http",
+  "id": "8a783cfb-b939-4d2a-911f-e90301e5c50d",
+  "rank": "",
+  "url": "{{BaseUrl}}/restaurants",
+  "method": "POST",
+  "contentType": "none"
+}

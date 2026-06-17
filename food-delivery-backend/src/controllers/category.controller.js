@@ -6,10 +6,11 @@ import {
   getCategoryByIdService,
   updateCategoryService,
   deleteCategoryService,
+  getMyCategoriesService,
 } from "../services/category.service.js";
 
 export const createCategory = asyncHandler(async (req, res) => {
-  const category = await createCategoryService(req.body);
+  const category = await createCategoryService(req.body, req.user);
 
   res.status(201).json({
     success: true,
@@ -53,5 +54,14 @@ export const deleteCategory = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Category deleted successfully",
+  });
+});
+export const getMyCategories = asyncHandler(async (req, res) => {
+  const categories = await getMyCategoriesService(req.user._id);
+
+  res.status(200).json({
+    success: true,
+    count: categories.length,
+    data: categories,
   });
 });

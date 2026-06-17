@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1781620352606113,
+    "key": "content-type",
+    "value": "application/json",
+    "isEnabled": true,
+    "description": ""
+  },
+  {
+    "id": 1781620378846115,
+    "key": "authorization",
+    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMzE2ZWQ2MzM0YjQ4MzdkY2Q4ZTk4NiIsImlhdCI6MTc4MTYyNDk2NywiZXhwIjoxNzgxNjI1ODY3fQ._s7FPgoDQq38g8QVBoE_RDEpaDyKMWFeCONoB-0xhbo",
+    "isEnabled": true,
+    "description": ""
+  }
+]

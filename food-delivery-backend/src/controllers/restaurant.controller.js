@@ -6,6 +6,7 @@ import {
   getRestaurantByIdService,
   updateRestaurantService,
   deleteRestaurantService,
+  getMyRestaurantsService,
 } from "../services/restaurant.service.js";
 
 export const createRestaurant = asyncHandler(async (req, res) => {
@@ -53,5 +54,14 @@ export const deleteRestaurant = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Restaurant deleted successfully",
+  });
+});
+export const getMyRestaurants = asyncHandler(async (req, res) => {
+  const restaurants = await getMyRestaurantsService(req.user._id);
+
+  res.status(200).json({
+    success: true,
+    count: restaurants.length,
+    data: restaurants,
   });
 });
