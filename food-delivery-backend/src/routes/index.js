@@ -8,6 +8,7 @@ import categoryRoutes from "./category.routes.js";
 import menuRoutes from "./menu.routes.js";
 import orderRoutes from "./order.routes.js";
 import uploadRoutes from "./upload.routes.js";
+import paymentRoutes from "./payment.routes.js";
 
 const router = express.Router();
 
@@ -19,4 +20,6 @@ router.use("/categories", categoryRoutes);
 router.use("/menus", menuRoutes);
 router.use("/orders", orderRoutes);
 router.use("/upload", uploadRoutes);
+router.use("/payments", paymentRoutes);
+
 export default router;

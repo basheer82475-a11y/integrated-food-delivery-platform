@@ -39,6 +39,8 @@ export const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      accessToken,
+      refreshToken,
     },
   });
 });
@@ -66,6 +68,8 @@ export const loginUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      accessToken,
+      refreshToken,
     },
   });
 });
@@ -98,7 +102,7 @@ export const getMyProfile = asyncHandler(async (req, res) => {
 // Refresh Access Token
 // ==============================
 export const refreshAccessToken = asyncHandler(async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = req.cookies.refreshToken || req.body.refreshToken;
 
   if (!refreshToken) {
     return res.status(401).json({
@@ -116,5 +120,6 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Access token refreshed",
+    accessToken,
   });
 });

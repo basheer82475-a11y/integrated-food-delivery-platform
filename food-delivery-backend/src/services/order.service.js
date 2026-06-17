@@ -1,4 +1,4 @@
-import Order from "../models/order.model.js";
+  import Order from "../models/order.model.js";
 import Restaurant from "../models/restaurant.model.js";
 import Menu from "../models/menu.model.js";
 import ApiError from "../utils/ApiError.js";
@@ -7,6 +7,8 @@ export const createOrderService = async (orderData, userId) => {
   const restaurant = await Restaurant.findById(orderData.restaurant);
 
   if (!restaurant) {
+
+
     throw new ApiError(404, "Restaurant not found");
   }
 
@@ -17,8 +19,13 @@ export const createOrderService = async (orderData, userId) => {
       const menuItem = await Menu.findById(item.menuItem);
 
       if (menuItem.restaurant.toString() !== orderData.restaurant.toString()) {
-        throw new ApiError(400, "Menu item does not belong to restaurant");
+        // Provide more context for debugging mismatched restaurant/menu items
+        throw new ApiError(
+          400,
+          `Menu item does not belong to restaurant (menu.restaurant=${menuItem.restaurant}, order.restaurant=${orderData.restaurant})`,
+        );
       }
+
 
       totalAmount += menuItem.price * item.quantity;
 
